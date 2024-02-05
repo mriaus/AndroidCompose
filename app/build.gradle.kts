@@ -78,8 +78,8 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.46.1")
-    kapt("com.google.dagger:hilt-compiler:2.46.1")
+    implementation ("com.google.dagger:hilt-android:2.50")
+    kapt ("com.google.dagger:hilt-compiler:2.50")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
@@ -92,4 +92,7 @@ dependencies {
 
     // Async Image
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    //Icons
+    implementation("androidx.compose.material:material-icons-extended:1.6.0")
 }

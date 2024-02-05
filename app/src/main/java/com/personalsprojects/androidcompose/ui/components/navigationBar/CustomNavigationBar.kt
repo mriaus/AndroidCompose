@@ -1,6 +1,8 @@
 package com.personalsprojects.androidcompose.ui.components.navigationBar
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Star
@@ -15,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.personalsprojects.androidcompose.data.network.NetworkDataSourceImpl
 import com.personalsprojects.androidcompose.ui.components.navigation.NavigationScreensSealed
 
 
@@ -33,7 +36,7 @@ fun CustomNavigationBar(navController: NavController) {
                 selectedScreen = NavigationScreensSealed.Screen1.route
                 navController.navigate(NavigationScreensSealed.Screen1.route)
             },
-            icon = { Icon(Icons.Filled.List, "Show all") })
+            icon = { Icon(Icons.AutoMirrored.Filled.List, "Show all") })
         NavigationBarItem(
             selected = selectedScreen == NavigationScreensSealed.Screen2.route,
             onClick = {selectedScreen = NavigationScreensSealed.Screen2.route
@@ -42,7 +45,7 @@ fun CustomNavigationBar(navController: NavController) {
         NavigationBarItem(selectedScreen == NavigationScreensSealed.Screen3.route,
             onClick = { selectedScreen = NavigationScreensSealed.Screen3.route
                 navController.navigate(NavigationScreensSealed.Screen3.route)},
-            icon = { Icon(Icons.Filled.ExitToApp, "Exit") })
+            icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, "Exit") })
     })
 }
 
