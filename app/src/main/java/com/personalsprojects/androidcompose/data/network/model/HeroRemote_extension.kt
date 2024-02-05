@@ -8,5 +8,5 @@ fun List<HeroResult>.toLocal() = this.map {
 }
 
 fun HeroResult.toLocal() = with(this){
-    HeroLocal(id.toString(), name, "${thumbnail.path}${thumbnail.extension.name}", description, favorite = false )
+    HeroLocal(id.toString(), name, "${thumbnail.path}.${thumbnail.extension.name}", description, favorite = false )
 }
