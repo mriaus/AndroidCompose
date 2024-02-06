@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -62,10 +64,15 @@ fun HeroCard(hero: Hero, modifier: Modifier? = null) {
                 Text(text = hero.name,
                     color = Color.White
                 )
-                IconButton(onClick = { /*TODO*/ }, content ={ Icon(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    contentDescription = "Like"
-                )})
+                IconButton(onClick = { /*TODO*/ },
+                    content ={
+                        Icon(
+                            tint = Color.Red,
+                            imageVector = Icons.Default.FavoriteBorder,
+                            contentDescription = "Like icon"
+                            )
+                    }
+                )
             }
 
         }
