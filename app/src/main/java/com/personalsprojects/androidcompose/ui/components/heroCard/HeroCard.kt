@@ -1,13 +1,20 @@
 package com.personalsprojects.androidcompose.ui.components.heroCard
 
+import android.util.Log
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -15,29 +22,38 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.DefaultTranslationX
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.personalsprojects.androidcompose.R
 import com.personalsprojects.androidcompose.domain.Hero
-
+import com.personalsprojects.androidcompose.ui.components.shadowLayer.ShadowLayer
 
 
 @Composable
-fun HeroCard(hero: Hero, modifier: Modifier? = null) {
+fun HeroCard(hero: Hero, modifier: Modifier? = null, onPressHero: () -> Unit, onPressLike: () -> Unit) {
     val colorStops = arrayOf(
         0.0f to Color.Black,
         0.2f to Color(0xAA000000),
         1f to Color.Transparent
     )
+
     ElevatedCard(
         modifier = modifier ?: Modifier.size(width =250.dp, height = 250.dp),
         elevation = CardDefaults.cardElevation()
@@ -52,24 +68,32 @@ fun HeroCard(hero: Hero, modifier: Modifier? = null) {
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxSize())
 
-            Box(
+            ShadowLayer(colorStops = colorStops)
+            Row(
                 Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colorStops = colorStops
-                        )
-                    ))
-            Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceEvenly){
-                Text(text = hero.name,
-                    color = Color.White
-                )
+                    .fillMaxWidth()
+                    .padding(10.dp, 0.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                ){
+                Box(modifier = Modifier.weight(1f)){
+                    Text(text = hero.name,
+                        color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
                 IconButton(onClick = { /*TODO*/ },
                     content ={
                         Icon(
                             tint = Color.Red,
-                            imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription = "Like icon"
+                            imageVector = if(hero.favorite){
+                                Icons.Default.Favorite
+                            }else {
+                                Icons.Default.FavoriteBorder
+                            },
+                            contentDescription = "Like icon",
+                            modifier = Modifier.size(40.dp, 40.dp)
                             )
                     }
                 )
@@ -87,9 +111,11 @@ fun HeroCard_Preview(){
         hero = Hero(
             "123",
             "Phoenix",
-            "https://static.wikia.nocookie.net/marveldatabase/images/7/73/Phoenix_Resurrection_The_Return_of_Jean_Grey_Vol_1_1_Artgerm_Green_Costume_Variant_Textless.jpg/revision/latest?cb=20171031223546",
+            "https://static.wikia.nocookie.net/marveldatabase/images/7/73/Phoenix_Resurrection_The_Return_of_Jean_Grey_Vol_1_1_Artgerm_Green_Costume_Variant_Textless.jpg",
             "a",
             true
-        )
+        ),
+        onPressHero = {},
+        onPressLike = {}
     )
 }

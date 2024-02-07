@@ -29,6 +29,7 @@ fun NavigationScreens(navController: NavHostController, viewModel: HeroListViewM
                 is HeroListState.Success -> {
                     LazyColumn(Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                         contentPadding = PaddingValues(20.dp),
                         content = {items(
                             ((state as HeroListState.Success).heroes.count()),
@@ -38,7 +39,9 @@ fun NavigationScreens(navController: NavHostController, viewModel: HeroListViewM
                         }
                     )
                 }
+                is HeroListState.Loading -> {
 
+                }
                 else -> {
                     Text(text = "Error despuess de recibir los datos")
                 }
