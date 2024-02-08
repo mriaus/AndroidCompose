@@ -59,7 +59,7 @@ fun AndroidComposeTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Color(0xFFe62429).toArgb()
+            window.statusBarColor = Color(0xFFBCA8A1).toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

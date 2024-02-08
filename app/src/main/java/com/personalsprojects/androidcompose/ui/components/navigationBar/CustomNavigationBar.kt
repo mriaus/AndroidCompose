@@ -1,5 +1,6 @@
 package com.personalsprojects.androidcompose.ui.components.navigationBar
 
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.List
@@ -14,9 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.personalsprojects.androidcompose.R
 import com.personalsprojects.androidcompose.data.network.NetworkDataSourceImpl
 import com.personalsprojects.androidcompose.ui.components.navigation.NavigationScreensSealed
 
@@ -28,7 +32,10 @@ fun CustomNavigationBar(navController: NavController) {
         mutableStateOf(NavigationScreensSealed.Screen1.route)
     }
 
-    NavigationBar(content =
+    NavigationBar(
+        containerColor = Color(0xFFBCA8A1),
+
+        content =
     {
         NavigationBarItem(
             selected = selectedScreen == NavigationScreensSealed.Screen1.route ,
@@ -42,10 +49,13 @@ fun CustomNavigationBar(navController: NavController) {
             onClick = {selectedScreen = NavigationScreensSealed.Screen2.route
                 navController.navigate(NavigationScreensSealed.Screen2.route)},
             icon = { Icon(Icons.Filled.Star, NavigationScreensSealed.Screen2.route) })
+        /*
         NavigationBarItem(selectedScreen == NavigationScreensSealed.Screen3.route,
             onClick = { selectedScreen = NavigationScreensSealed.Screen3.route
                 navController.navigate(NavigationScreensSealed.Screen3.route)},
             icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, "Exit") })
+            */
+
     })
 }
 

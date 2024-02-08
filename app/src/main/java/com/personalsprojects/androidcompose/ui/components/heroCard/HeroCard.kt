@@ -86,7 +86,7 @@ fun HeroCard(hero: Hero, modifier: Modifier? = null, onPressHero: () -> Unit, on
                 IconButton(onClick = { /*TODO*/ },
                     content ={
                         Icon(
-                            tint = Color.Red,
+                            tint = Color(0xFFf56d74),
                             imageVector = if(hero.favorite){
                                 Icons.Default.Favorite
                             }else {
