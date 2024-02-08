@@ -21,6 +21,7 @@ import com.personalsprojects.androidcompose.HeroListViewModel
 import com.personalsprojects.androidcompose.states.HeroListState
 import com.personalsprojects.androidcompose.ui.components.heroCard.HeroCard
 import com.personalsprojects.androidcompose.R
+import com.personalsprojects.androidcompose.domain.toLocal
 
 @Composable
 fun NavigationScreens(navController: NavHostController, viewModel: HeroListViewModel) {
@@ -43,7 +44,8 @@ fun NavigationScreens(navController: NavHostController, viewModel: HeroListViewM
                                 items(
                                     ((state as HeroListState.Success).heroes.count()),
                                     itemContent = {
-                                        HeroCard(hero = (state as HeroListState.Success).heroes[it], onPressHero = {} , onPressLike = {})
+                                        HeroCard(hero = (state as HeroListState.Success).heroes[it], onPressHero = {} , onPressLike = {viewModel.onPressLike(
+                                            (state as HeroListState.Success).heroes[it].toLocal())})
                                     })
                             }
                         )

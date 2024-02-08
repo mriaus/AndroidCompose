@@ -7,11 +7,11 @@ import com.personalsprojects.androidcompose.domain.Hero
 
 @Entity(tableName = "heroes")
 data class HeroLocal (
-   @PrimaryKey val id: String,
+    @PrimaryKey val id: String,
     val name: String,
     val photo: String,
     val description: String,
-    val favorite: Boolean
+    var favorite: Boolean
     )
 
 fun List<HeroLocal>.toUI(): List<Hero> = this.map {

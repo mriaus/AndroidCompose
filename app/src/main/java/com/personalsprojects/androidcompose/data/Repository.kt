@@ -6,4 +6,6 @@ import com.personalsprojects.androidcompose.domain.Hero
 
 interface Repository {
     suspend fun getHeroes() : List<Hero>
+
+    suspend fun updateHero(heroLocal: HeroLocal) : List<Hero>
 }

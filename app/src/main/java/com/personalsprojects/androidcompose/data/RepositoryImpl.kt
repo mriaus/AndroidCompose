@@ -2,6 +2,7 @@ package com.personalsprojects.androidcompose.data
 
 import android.util.Log
 import com.personalsprojects.androidcompose.data.local.LocalDataSource
+import com.personalsprojects.androidcompose.data.local.model.HeroLocal
 import com.personalsprojects.androidcompose.data.local.model.toUI
 import com.personalsprojects.androidcompose.data.network.NetworkDataSource
 import com.personalsprojects.androidcompose.data.network.model.toLocal
@@ -16,19 +17,26 @@ class RepositoryImpl @Inject constructor(
 
     //Get heroes with cache
     override suspend fun getHeroes(): List<Hero> {
-        Log.d("HEROES", "ENTRA EN EL GETHEROES repos");
-
         val localHeroes = localDataSource.getHeroes()
         if(localHeroes.isEmpty()) {
-            Log.d("HEROES", "ENTRA EN EL if get heroes repo");
 
             val remoteHeroes = networkDataSource.getHeroes()
-            Log.d("HEROES", remoteHeroes.toString());
             localDataSource.insertHeroes(remoteHeroes.data.results.toLocal())
         }else{
             return localHeroes.toUI()
         }
         return localDataSource.getHeroes().toUI()
+    }
+
+    //Update a hero in local. Used to like heroes
+    override suspend fun updateHero(heroLocal: HeroLocal): List<Hero> {
+        val localHero = localDataSource.getHeroById(heroLocal.id)
+
+        if(localHero != null){
+            localDataSource.updateHero(heroLocal)
+        }
+        return localDataSource.getHeroes().toUI()
+
     }
 }
 

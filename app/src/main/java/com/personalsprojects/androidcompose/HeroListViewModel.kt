@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.personalsprojects.androidcompose.data.Repository
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
+import com.personalsprojects.androidcompose.domain.Hero
 import com.personalsprojects.androidcompose.states.HeroListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +25,10 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
     val state: StateFlow<HeroListState> = _state.asStateFlow()
 
     init {
-        getHeros()
+        getHeroes()
     }
 
-    fun getHeros() {
+    private fun getHeroes() {
         viewModelScope.launch {
             _state.update { HeroListState.Loading }
 
@@ -36,14 +37,29 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
                     repository.getHeroes()
                 }
             }
-            Log.d("HEROES", "RESULT $result");
             if (result.isSuccess) {
-                Log.d("HEROES", "ENTRA EN EL succes VM");
                 _state.update { HeroListState.Success(result.getOrThrow()) }
             } else {
-                Log.d("HEROES", "ENTRA EN EL else VM");
                 _state.update { HeroListState.Error(result.exceptionOrNull()?.message.orEmpty()) }
             }
+        }
+    }
+
+
+    fun onPressLike(hero: HeroLocal){
+        hero.favorite = !hero.favorite
+        viewModelScope.launch {
+           val result = runCatching {
+                withContext(Dispatchers.IO) {
+                    repository.updateHero(hero)
+                }
+            }
+            if (result.isSuccess) {
+                _state.update { HeroListState.Success(result.getOrThrow()) }
+            } else {
+                _state.update { HeroListState.Error(result.exceptionOrNull()?.message.orEmpty()) }
+            }
+
         }
     }
 
