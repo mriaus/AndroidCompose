@@ -21,8 +21,6 @@ object NetworkModule {
 
     @Provides
     fun providesOkHttpClient(): OkHttpClient {
-        Log.d("API", "Entra en el provides httpclient");
-
         val httpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val originalRequest = chain.request()
 
@@ -36,9 +34,6 @@ object NetworkModule {
             val request = originalRequest.newBuilder()
                 .url(urlWithParams)
                 .build()
-
-            Log.d("HEROES", "URL ${request.url}");
-
             chain.proceed(request)
         }.build()
 

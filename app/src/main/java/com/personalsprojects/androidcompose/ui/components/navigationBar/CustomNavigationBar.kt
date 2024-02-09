@@ -42,6 +42,7 @@ fun CustomNavigationBar(navController: NavController) {
             onClick = {
                 selectedScreen = NavigationScreensSealed.Screen1.route
                 navController.navigate(NavigationScreensSealed.Screen1.route)
+
             },
             icon = { Icon(Icons.AutoMirrored.Filled.List, "Show all") })
         NavigationBarItem(

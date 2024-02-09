@@ -3,10 +3,11 @@ package com.personalsprojects.androidcompose.data.local
 import android.util.Log
 import com.personalsprojects.androidcompose.data.local.dataBase.HeroDao
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val dao: HeroDao) : LocalDataSource {
-    override suspend fun getHeroes(): List<HeroLocal> {
+    override suspend fun getHeroes(): Flow<List<HeroLocal>> {
         return dao.getHeroes()
     }
 

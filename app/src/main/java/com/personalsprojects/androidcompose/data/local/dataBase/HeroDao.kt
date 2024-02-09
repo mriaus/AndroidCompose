@@ -5,12 +5,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HeroDao {
 
     @Query("Select * from heroes")
-    fun getHeroes(): List<HeroLocal>
+    fun getHeroes(): Flow<List<HeroLocal>>
     @Insert
     fun insertHeroes(heroes: List<HeroLocal>)
 
