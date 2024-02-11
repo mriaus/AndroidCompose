@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.personalsprojects.androidcompose.ui.screens.favoritesScreen.FavoritesViewModel
+import com.personalsprojects.androidcompose.ui.screens.heroDetailScreen.HeroDetailScreenViewModel
 import com.personalsprojects.androidcompose.ui.screens.mainScreen.HeroListViewModel
 import com.personalsprojects.androidcompose.ui.screens.mainScreen.MainScreen
 import com.personalsprojects.androidcompose.ui.theme.AndroidComposeTheme
@@ -23,6 +24,7 @@ class MainActivity : ComponentActivity() {
 
     private val heroListViewModel: HeroListViewModel by viewModels()
     private val favoritesViewModel: FavoritesViewModel by viewModels()
+    private val heroDetailViewModel: HeroDetailScreenViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(heroListViewModel, favoritesViewModel)
+                    MainScreen(heroListViewModel, favoritesViewModel,heroDetailViewModel)
                 }
             }
         }

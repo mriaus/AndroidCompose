@@ -1,5 +1,7 @@
 package com.personalsprojects.androidcompose.ui.components.navigationBar
 
+import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -29,35 +31,37 @@ import com.personalsprojects.androidcompose.ui.components.navigation.NavigationS
 fun CustomNavigationBar(navController: NavController) {
 
     var selectedScreen by remember {
-        mutableStateOf(NavigationScreensSealed.Screen1.route)
+        mutableStateOf(NavigationScreensSealed.ScreenHeroList.route)
     }
 
-    NavigationBar(
-        containerColor = Color(0xFFBCA8A1),
 
-        content =
-    {
-        NavigationBarItem(
-            selected = selectedScreen == NavigationScreensSealed.Screen1.route ,
-            onClick = {
-                selectedScreen = NavigationScreensSealed.Screen1.route
-                navController.navigate(NavigationScreensSealed.Screen1.route)
+        NavigationBar(
+            containerColor = Color(0xFFBCA8A1),
+            content =
+            {
+                NavigationBarItem(
+                    selected = selectedScreen == NavigationScreensSealed.ScreenHeroList.route,
+                    onClick = {
+                        selectedScreen = NavigationScreensSealed.ScreenHeroList.route
+                        navController.navigate(NavigationScreensSealed.ScreenHeroList.route)
 
-            },
-            icon = { Icon(Icons.AutoMirrored.Filled.List, "Show all") })
-        NavigationBarItem(
-            selected = selectedScreen == NavigationScreensSealed.Screen2.route,
-            onClick = {selectedScreen = NavigationScreensSealed.Screen2.route
-                navController.navigate(NavigationScreensSealed.Screen2.route)},
-            icon = { Icon(Icons.Filled.Star, NavigationScreensSealed.Screen2.route) })
-        /*
+                    },
+                    icon = { Icon(Icons.AutoMirrored.Filled.List, "Show all") })
+                NavigationBarItem(
+                    selected = selectedScreen == NavigationScreensSealed.ScreenFavs.route,
+                    onClick = {
+                        selectedScreen = NavigationScreensSealed.ScreenFavs.route
+                        navController.navigate(NavigationScreensSealed.ScreenFavs.route)
+                    },
+                    icon = { Icon(Icons.Filled.Star, NavigationScreensSealed.ScreenFavs.route) })
+                /*
         NavigationBarItem(selectedScreen == NavigationScreensSealed.Screen3.route,
             onClick = { selectedScreen = NavigationScreensSealed.Screen3.route
                 navController.navigate(NavigationScreensSealed.Screen3.route)},
             icon = { Icon(Icons.AutoMirrored.Filled.ExitToApp, "Exit") })
             */
 
-    })
+            })
 }
 
 @Preview(showBackground = true)

@@ -10,6 +10,7 @@ import com.personalsprojects.androidcompose.states.HeroListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,11 +26,12 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
     private val _state: MutableStateFlow<List<Hero>> = MutableStateFlow(listOf())
     val state: StateFlow<List<Hero>> = _state.asStateFlow()
 
-     private val stateRepository: StateFlow<List<Hero>> = repository.heroesFlow
+    lateinit var selectedHero: Hero
+
+     private val stateRepository: Flow<List<Hero>> = repository.heroesFlow
 
 
     init {
-        Log.d("ViewModel", "Repository hash HEROLIST: ${repository.hashCode()}")
         launchFlow()
         getHeroes()
     }
@@ -37,7 +39,6 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
     private fun launchFlow(){
         viewModelScope.launch(Dispatchers.IO) {
             stateRepository.collect{ newHeroes ->
-                Log.d("FLOW", "Entra en el collect de herolist")
                 _state.update { newHeroes }
             }
         }
@@ -57,6 +58,11 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
                     repository.updateHero(hero)
             }
         }
+    }
+
+    fun onPressHero(hero: Hero){
+        selectedHero = hero
+
     }
 
 }

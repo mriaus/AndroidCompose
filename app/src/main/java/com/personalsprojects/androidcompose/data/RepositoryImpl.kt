@@ -5,8 +5,10 @@ import com.personalsprojects.androidcompose.data.local.LocalDataSource
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
 import com.personalsprojects.androidcompose.data.local.model.toUI
 import com.personalsprojects.androidcompose.data.network.NetworkDataSource
+import com.personalsprojects.androidcompose.data.network.model.toDetail
 import com.personalsprojects.androidcompose.data.network.model.toLocal
 import com.personalsprojects.androidcompose.domain.Hero
+import com.personalsprojects.androidcompose.domain.HeroDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +17,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.flow.update
+
 import javax.inject.Inject
 
 
@@ -24,7 +25,7 @@ class RepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val networkDataSource: NetworkDataSource
 ) : Repository {
-
+    //See how to change this
     private val _heroesFlow = MutableStateFlow<List<Hero>>(emptyList())
     override val heroesFlow: StateFlow<List<Hero>> = _heroesFlow.asStateFlow()
 
@@ -34,7 +35,6 @@ class RepositoryImpl @Inject constructor(
         val localHeroes = localDataSource.getHeroes().firstOrNull()
 
          if (localHeroes.isNullOrEmpty()) {
-            // Si no hay héroes en la base de datos local, obtén los datos de la red
             val remoteHeroes = networkDataSource.getHeroes()
             localDataSource.insertHeroes(remoteHeroes.data.results.toLocal())
             localDataSource.getHeroes().map { it.toUI() }
@@ -53,6 +53,11 @@ class RepositoryImpl @Inject constructor(
             localDataSource.updateHero(heroLocal)
         }
         reloadState()
+    }
+
+    override suspend fun getNetworkHeroByID(heroId: String): HeroDetail {
+        val remoteHero = networkDataSource.getHeroById(heroId)
+        return remoteHero.data.results.toDetail()[0]
     }
 
     private suspend fun reloadState(){

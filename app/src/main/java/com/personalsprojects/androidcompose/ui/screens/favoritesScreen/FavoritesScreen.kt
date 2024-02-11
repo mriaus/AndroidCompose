@@ -12,14 +12,12 @@ import com.personalsprojects.androidcompose.ui.components.heroCard.HeroCard
 
 
 @Composable
-fun FavoritesScreen(state :List<Hero>, favoritesViewModel: FavoritesViewModel) {
-
-
+fun FavoritesScreen(state :List<Hero>, favoritesViewModel: FavoritesViewModel, onPressHero: (Hero) -> Unit ) {
     CustomLazyColumn(background = R.drawable.wp10527461 , columnContent = {
         items(
             state.count(),
             itemContent = {
-                HeroCard(hero = state[it], onPressHero = { /*TODO*/} , onPressLike = {favoritesViewModel.onPressLike(
+                HeroCard(hero = state[it], onPressHero = { onPressHero(state[it])} , onPressLike = {favoritesViewModel.onPressLike(
                     state[it].toLocal())})
             })
     })

@@ -9,16 +9,17 @@ import androidx.navigation.compose.rememberNavController
 import com.personalsprojects.androidcompose.ui.components.navigation.NavigationScreens
 import com.personalsprojects.androidcompose.ui.components.navigationBar.CustomNavigationBar
 import com.personalsprojects.androidcompose.ui.screens.favoritesScreen.FavoritesViewModel
+import com.personalsprojects.androidcompose.ui.screens.heroDetailScreen.HeroDetailScreenViewModel
 
 @Composable
-fun MainScreen(heroListViewModel: HeroListViewModel, favoritesViewModel: FavoritesViewModel) {
+fun MainScreen(heroListViewModel: HeroListViewModel, favoritesViewModel: FavoritesViewModel, heroDetailScreenViewModel: HeroDetailScreenViewModel) {
     val navController = rememberNavController()
 
     Scaffold(
         bottomBar = { CustomNavigationBar(navController = navController) }
     ) {
         Box(modifier = Modifier.padding(it)){
-            NavigationScreens(navController = navController, heroesListviewModel = heroListViewModel, favoritesViewModel = favoritesViewModel)
+            NavigationScreens(navController = navController, heroesListviewModel = heroListViewModel, favoritesViewModel = favoritesViewModel, heroDetailScreenViewModel)
         }
     }
 }
