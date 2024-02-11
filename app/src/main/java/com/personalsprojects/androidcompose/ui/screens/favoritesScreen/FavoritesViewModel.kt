@@ -1,13 +1,11 @@
 package com.personalsprojects.androidcompose.ui.screens.favoritesScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.personalsprojects.androidcompose.data.Repository
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
 import com.personalsprojects.androidcompose.domain.Hero
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +23,6 @@ class FavoritesViewModel @Inject constructor(private val repository: Repository)
 
 
     init {
-        Log.d("ViewModel", "Repository hash FAVORITE: ${repository.hashCode()}")
         launchFlow()
         getFavorites()
     }
@@ -34,7 +31,6 @@ class FavoritesViewModel @Inject constructor(private val repository: Repository)
     private fun launchFlow(){
         viewModelScope.launch(Dispatchers.IO) {
             stateRepository.collect{heroes ->
-                Log.d("FLOW", "Entra en el collect de favorites")
                 _state.update { heroes.filter{ it.favorite} }
             }
         }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
@@ -24,7 +23,7 @@ fun ComplexLoading() {
     var showText by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        delay(3000) // Espera 2 segundos (puedes ajustar el tiempo según tus necesidades)
+        delay(3000)
         showText = true
     }
 

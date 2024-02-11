@@ -1,6 +1,5 @@
 package com.personalsprojects.androidcompose.ui.screens.heroDetailScreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,10 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.CircularProgressIndicator
-
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-
 import com.personalsprojects.androidcompose.states.HeroDetailState
 import com.personalsprojects.androidcompose.ui.components.CustomLazyRow.CustomLazyRow
 import com.personalsprojects.androidcompose.ui.components.Error.ErrorComponent
@@ -136,7 +130,7 @@ fun HeroDetailScreen(heroId: String, viewModel: HeroDetailScreenViewModel) {
                         }
                     }
 
-                    //Descripción
+                    //Description
                     Column {
                         Text(
                             text = "Description",
@@ -173,10 +167,3 @@ fun HeroDetailScreen(heroId: String, viewModel: HeroDetailScreenViewModel) {
 }
 
 
-/*
-@Preview(showSystemUi = true)
-@Composable
-fun HeroDetailScreen_Preview() {
-    HeroDetailScreen(heroId = "")
-}
-*/

@@ -1,6 +1,5 @@
 package com.personalsprojects.androidcompose.data
 
-import android.util.Log
 import com.personalsprojects.androidcompose.data.local.LocalDataSource
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
 import com.personalsprojects.androidcompose.data.local.model.toUI
@@ -20,8 +19,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.update
-
 import javax.inject.Inject
 
 
@@ -36,17 +33,12 @@ class RepositoryImpl @Inject constructor(
 
     //Get heroes with cache
     override suspend fun getHeroes(): List<Hero> {
-        Log.d("GETHEROES","ENTRA")
         val localHeroes = localDataSource.getHeroes().firstOrNull()
-        Log.d("GETHEROES","localheroes ${localHeroes}")
 
          if (localHeroes.isNullOrEmpty()) {
-            Log.d("GETHEROES","ENTRA null o empty")
              try{
                  val remoteHeroes = networkDataSource.getHeroes()
-                 Log.d("GETHEROES","HACE EL GET HEROES ${remoteHeroes}")
                  localDataSource.insertHeroes(remoteHeroes.data.results.toLocal())
-                 Log.d("GETHEROES","Pasa el insert S ${remoteHeroes}")
              } catch(e: Exception) {
                  _heroesFlow.value = listOf()
              }
