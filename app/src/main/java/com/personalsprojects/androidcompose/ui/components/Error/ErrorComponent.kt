@@ -35,7 +35,7 @@ fun ErrorComponent(){
                     .wrapContentSize(align = Alignment.Center)
             ) {
                 Text(
-                    text = "Parece que ha habido un error",
+                    text = "Parece que ha ocurrido un error",
                     style = MaterialTheme.typography.displayLarge.copy(color = Color(0xFFe62429)),
                 )
             }
