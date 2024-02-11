@@ -6,7 +6,5 @@ import com.personalsprojects.androidcompose.data.network.model.Stories
 data class HeroDetail(
     val name: String,
     val photo: String,
-    val description: String,
-    val series: Comics,
-    val stories: Stories
+    val description: String
 )

@@ -13,7 +13,9 @@ import com.personalsprojects.androidcompose.ui.screens.mainScreen.HeroListViewMo
 import com.personalsprojects.androidcompose.ui.components.heroCard.HeroCard
 import com.personalsprojects.androidcompose.R
 import com.personalsprojects.androidcompose.domain.toLocal
+import com.personalsprojects.androidcompose.ui.components.Error.ErrorComponent
 import com.personalsprojects.androidcompose.ui.components.customLazyColumn.CustomLazyColumn
+import com.personalsprojects.androidcompose.ui.components.loading.ComplexLoading
 import com.personalsprojects.androidcompose.ui.screens.favoritesScreen.FavoritesScreen
 import com.personalsprojects.androidcompose.ui.screens.favoritesScreen.FavoritesViewModel
 import com.personalsprojects.androidcompose.ui.screens.heroDetailScreen.HeroDetailScreen
@@ -25,6 +27,10 @@ fun NavigationScreens(navController: NavHostController, heroesListviewModel: Her
     NavHost(navController = navController, startDestination = NavigationScreensSealed.ScreenHeroList.route){
         composable(NavigationScreensSealed.ScreenHeroList.route){
             val state by heroesListviewModel.state.collectAsState()
+            if(state.isEmpty()){
+                //Check how to do a timeOut to show error
+                ComplexLoading()
+            }else{
                 CustomLazyColumn(background = R.drawable.wp10527461 , columnContent = {
                     items(
                         state.count(),
@@ -34,6 +40,8 @@ fun NavigationScreens(navController: NavHostController, heroesListviewModel: Her
                                 onPressLike = {heroesListviewModel.onPressLike(state[it].toLocal())})
                         })
                 })
+            }
+
 
         }
 
@@ -43,15 +51,16 @@ fun NavigationScreens(navController: NavHostController, heroesListviewModel: Her
                 navController.navigate(NavigationScreensSealed.ScreenDetail.route + "/${selectedHero.id}")
             }  )
         }
-
+        /*
         composable(NavigationScreensSealed.Screen3.route){
             Text(text = "cScreen3")
 
         }
+        */
 
         composable(NavigationScreensSealed.ScreenDetail.route + "/{heroId}"){
             val heroId = it.arguments?.getString("heroId") ?: "error"
-            HeroDetailScreen(heroId = heroId, heroDetailScreenViewModel, onPressBack = {navController.popBackStack()})
+            HeroDetailScreen(heroId = heroId, heroDetailScreenViewModel)
 
         }
     }

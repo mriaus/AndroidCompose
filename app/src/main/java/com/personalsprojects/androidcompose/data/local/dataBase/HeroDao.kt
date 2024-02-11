@@ -2,6 +2,7 @@ package com.personalsprojects.androidcompose.data.local.dataBase
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.personalsprojects.androidcompose.data.local.model.HeroLocal
@@ -12,7 +13,7 @@ interface HeroDao {
 
     @Query("Select * from heroes")
     fun getHeroes(): Flow<List<HeroLocal>>
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHeroes(heroes: List<HeroLocal>)
 
     @Update

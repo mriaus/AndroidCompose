@@ -7,8 +7,10 @@ import com.personalsprojects.androidcompose.data.local.model.toUI
 import com.personalsprojects.androidcompose.data.network.NetworkDataSource
 import com.personalsprojects.androidcompose.data.network.model.toDetail
 import com.personalsprojects.androidcompose.data.network.model.toLocal
+import com.personalsprojects.androidcompose.domain.Comic
 import com.personalsprojects.androidcompose.domain.Hero
 import com.personalsprojects.androidcompose.domain.HeroDetail
+import com.personalsprojects.androidcompose.domain.Serie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +18,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 
 import javax.inject.Inject
 
@@ -32,12 +36,21 @@ class RepositoryImpl @Inject constructor(
 
     //Get heroes with cache
     override suspend fun getHeroes(): List<Hero> {
+        Log.d("GETHEROES","ENTRA")
         val localHeroes = localDataSource.getHeroes().firstOrNull()
+        Log.d("GETHEROES","localheroes ${localHeroes}")
 
          if (localHeroes.isNullOrEmpty()) {
-            val remoteHeroes = networkDataSource.getHeroes()
-            localDataSource.insertHeroes(remoteHeroes.data.results.toLocal())
-            localDataSource.getHeroes().map { it.toUI() }
+            Log.d("GETHEROES","ENTRA null o empty")
+             try{
+                 val remoteHeroes = networkDataSource.getHeroes()
+                 Log.d("GETHEROES","HACE EL GET HEROES ${remoteHeroes}")
+                 localDataSource.insertHeroes(remoteHeroes.data.results.toLocal())
+                 Log.d("GETHEROES","Pasa el insert S ${remoteHeroes}")
+             } catch(e: Exception) {
+                 _heroesFlow.value = listOf()
+             }
+
         }
         reloadState()
         heroesFlow.collect()
@@ -55,9 +68,19 @@ class RepositoryImpl @Inject constructor(
         reloadState()
     }
 
-    override suspend fun getNetworkHeroByID(heroId: String): HeroDetail {
+    override suspend fun getNetworkHeroByID(heroId: String): Flow<HeroDetail> = flow {
         val remoteHero = networkDataSource.getHeroById(heroId)
-        return remoteHero.data.results.toDetail()[0]
+        emit(remoteHero.data.results.toDetail()[0])
+    }
+
+    override suspend fun getNetworkSeriesByHeroID(heroId: String): Flow<List<Serie>> = flow {
+        val remoteSeries = networkDataSource.getSeriesByHeroId(heroId)
+        emit(remoteSeries.data.results.toLocal())
+    }
+
+    override suspend fun getNetworkComicsByHeroID(heroId: String): Flow<List<Comic>> = flow {
+        val remoteSeriesComics = networkDataSource.getComicsByHeroId(heroId)
+        emit(remoteSeriesComics.data.results.toLocal())
     }
 
     private suspend fun reloadState(){

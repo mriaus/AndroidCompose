@@ -21,6 +21,5 @@ class LocalDataSourceImpl @Inject constructor(private val dao: HeroDao) : LocalD
 
     override suspend fun getHeroById(heroId: String): HeroLocal? {
        return dao.getHeroById(heroId)
-
     }
 }

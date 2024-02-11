@@ -7,5 +7,5 @@ import com.personalsprojects.androidcompose.domain.HeroDetail
     }
 
     fun Result.toDetail() = with(this){
-        HeroDetail(name, "${thumbnail.path}.${thumbnail.extension.name}",description , series, stories )
+        HeroDetail(name, "${thumbnail.path}.${thumbnail.extension.name}",description )
     }
