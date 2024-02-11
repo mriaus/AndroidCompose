@@ -23,10 +23,6 @@ class HeroDetailScreenViewModel @Inject constructor(private val repository: Repo
 
 
 
-    fun helloWorld(){
-        Log.d("vm", "HOLA")
-    }
-
     fun getHero(heroID: String){
         viewModelScope.launch {
             _state.update { HeroDetailState.Loading }
@@ -45,6 +41,11 @@ class HeroDetailScreenViewModel @Inject constructor(private val repository: Repo
                 _state.update { HeroDetailState.Error (result.exceptionOrNull()?.message.orEmpty()) }
             }
         }
+    }
+
+
+    fun resetState(){
+        _state.update { HeroDetailState.Loading }
     }
 
 }
