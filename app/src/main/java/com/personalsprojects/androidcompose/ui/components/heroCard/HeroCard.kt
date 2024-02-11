@@ -73,16 +73,23 @@ fun HeroCard(hero: Hero, modifier: Modifier? = null, onPressHero: () -> Unit, on
                 }
                 IconButton(onClick = { onPressLike() },
                     content ={
-                        Icon(
-                            tint = Color(0xFFf56d74),
-                            imageVector = if(hero.favorite){
-                                Icons.Default.Favorite
-                            }else {
-                                Icons.Default.FavoriteBorder
-                            },
-                            contentDescription = "Like icon",
-                            modifier = Modifier.size(40.dp, 40.dp)
+                        //Refactored for the tests
+                        if(hero.favorite){
+                            Icon(
+                                tint = Color(0xFFf56d74),
+                                imageVector =
+                                Icons.Default.Favorite,
+                                contentDescription = "Liked icon",
+                                modifier = Modifier.size(40.dp, 40.dp)
                             )
+                        }else{
+                            Icon(
+                                tint = Color(0xFFf56d74),
+                                imageVector = Icons.Default.FavoriteBorder,
+                                contentDescription = "Like icon",
+                                modifier = Modifier.size(40.dp, 40.dp)
+                            )
+                        }
                     }
                 )
             }
