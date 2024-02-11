@@ -2,7 +2,19 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="NavgiationScreenTest">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="whenHeroIsFavoriteIconWithFavoriteAppears()">
+        <State />
+      </entry>
+      <entry key="whenHeroIsNOTFavoriteIconWithFavoriteBorderAppears()">
+        <State />
+      </entry>
+      <entry key="whenSecondButtonPressedThenFocusChange()">
         <State />
       </entry>
     </value>
